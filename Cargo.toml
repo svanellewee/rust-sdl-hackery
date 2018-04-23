@@ -1,0 +1,8 @@
+[package]
+name = "sdl2-tut"
+version = "0.1.0"
+authors = ["Stephan van Ellewee <stephan.vanellewee@takealot.com>"]
+
+[dependencies.sdl2]
+version = "0.31.0"
+features = ["image"]
