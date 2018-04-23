@@ -6,14 +6,11 @@ use sdl2::keyboard::Keycode;
 use std::time::Duration;
 use sdl2::image::{LoadTexture, INIT_PNG};
 use sdl2::rect::{Rect, Point};
+use sdl2::render::{Canvas};
+use sdl2::video::{Window};
+use sdl2::{Sdl};
 
-
-
-
-pub fn main() {
-    let sdl_context = sdl2::init()
-        .unwrap();
-
+fn make_canvas(sdl_context: &Sdl) -> Canvas<Window> {
     let video_subsystem = sdl_context
         .video()
         .unwrap();
@@ -27,6 +24,16 @@ pub fn main() {
         .into_canvas()
         .build()
         .unwrap();
+    canvas 
+}
+
+
+pub fn main() {
+    let sdl_context = sdl2::init()
+        .unwrap();
+
+    let mut canvas = make_canvas(&sdl_context);
+
     let mut timer = sdl_context.timer().unwrap(); 
     let _image_context = sdl2::image::init(INIT_PNG).unwrap();
     let texture_creator = canvas.texture_creator();
@@ -77,6 +84,8 @@ pub fn main() {
                 _ => value
             }
         };
+        //canvas.set_draw_color(Color::RGB(0,100,0));
+        canvas.fill_rect(dest_rect_0);
         dest_rect_0.set_y(clamp(new_y, 600));
         dest_rect_0.set_x(clamp(new_x, 800));
         // The rest of the game loop goes here...
@@ -91,7 +100,7 @@ pub fn main() {
         };
         //println!("{}",character_size.0 as i32 * frame_index);
         source_rect_0.set_x(character_size.0 as i32 * frame_index);
-        canvas.clear();
+        //canvas.clear();
         canvas.copy_ex(
                 &texture,
                 Some(source_rect_0),
